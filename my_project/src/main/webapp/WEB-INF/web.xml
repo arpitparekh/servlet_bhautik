@@ -9,6 +9,21 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  
+  <error-page>
+   <error-code>404</error-code>
+   <location>/error_handler</location>
+</error-page>
+
+<error-page>
+   <error-code>500</error-code>
+   <location>/error_handler</location>
+</error-page>
+
+<error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/error_handler</location>
+</error-page>
  
   
 </web-app>
