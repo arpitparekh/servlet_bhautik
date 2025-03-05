@@ -21,8 +21,11 @@ public class MySqlCrudServlet extends HttpServlet {
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ArrayList<Majoor> list =  handler.showData();
 		
+		Majoor m = (Majoor)request.getAttribute("obj");
+		
+		
+		ArrayList<Majoor> list =  handler.showData();
 		request.setAttribute("list", list);
 		
 		request.getRequestDispatcher("mysqlcrud.jsp").forward(request, response);
@@ -33,15 +36,44 @@ public class MySqlCrudServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("Calling insert data");
-		String name = request.getParameter("name");
-		Float salary = Float.parseFloat(request.getParameter("salary"));
-		System.out.println("Calling insert data");
 		
 		
-		handler.insertData(name, salary);
+		String id = request.getParameter("updateId");
+		String delId = request.getParameter("deleteId");
+		if(id!=null) {  // update
+			
+			Majoor m = handler.getSingleData(Integer.parseInt(id));
+			request.setAttribute("obj", m);
+			ArrayList<Majoor> list =  handler.showData();
+			request.setAttribute("list", list);
+			doGet(request, response);
+			
+		}  // insert
+		else {
+			
+			if(delId!=null) {
+				
+				handler.deleteData(Integer.parseInt(delId));
+				
+			}else {
+				
+				String oldId = request.getParameter("id");
+				String name = request.getParameter("name");
+				float salary = Float.parseFloat(request.getParameter("salary"));
+				
+				if(oldId!=null) {  // update
+					handler.updateData(name, salary, Integer.parseInt(oldId));
+				}else {  // insert		
+					handler.insertData(name, salary);	
+				}
+			}
+			
+			response.sendRedirect(request.getContextPath() + "/mysql-crud");
+			
+			
+		}
 		
-		response.sendRedirect(request.getContextPath() + "/mysql-crud");
+		
 		
 	}
 

@@ -37,6 +37,10 @@ public class Majoor {
 	}
 	
 	
+	public Majoor() {
+		
+	}
+	
 	
 	
 

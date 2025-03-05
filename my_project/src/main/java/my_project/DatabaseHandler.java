@@ -76,6 +76,59 @@ public class DatabaseHandler {
 		
 	}
 	
+	Majoor getSingleData(int id) {
+		Majoor m = new Majoor();
+		String sql = "select * from majoor where id=?";
+		
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet result = ps.executeQuery();
+			while(result.next()) {				
+				m = new Majoor(result.getInt("id"),result.getString("name"),result.getFloat("salary"));
+			}
+			return m;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DH : "+e.getMessage());
+
+		}
+		return m;
+		
+	}
+	
+	void updateData(String name,float salary,int id) {
+		String sql = "update majoor set name = ?,salary = ? where id = ?";
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, name);
+			ps.setFloat(2, salary);
+			ps.setInt(3, id);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DH : "+e.getMessage());
+		}
+		
+	}
+	
+	void deleteData(int id) {
+		String sql = "delete from majoor where id = ?";
+		
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.execute();
+			
+		}catch (Exception e) {
+			
+			System.out.println("DH : "+e.getMessage());
+
+		}
+				
+	}
+	
 	
 
 }
