@@ -5,6 +5,8 @@ public class Majoor {
 	int id;
 	String name;
 	float salary;
+	String image_path;
+	byte[] image;
 	
 	public int getId() {
 		return id;
@@ -25,11 +27,28 @@ public class Majoor {
 	public void setSalary(float salary) {
 		this.salary = salary;
 	}
-	public Majoor(int i, String name, float salary) {
+	
+	
+	
+	public String getImage_path() {
+		return image_path;
+	}
+	public void setImage_path(String image_path) {
+		this.image_path = image_path;
+	}
+	public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	public Majoor(int i, String name, float salary,byte[] image,String image_path) {
 		
 		this.id = i;
 		this.name = name;
 		this.salary = salary;
+		this.image = image;
+		this.image_path = image_path;
 	}
 	@Override
 	public String toString() {
@@ -40,7 +59,6 @@ public class Majoor {
 	public Majoor() {
 		
 	}
-	
 	
 	
 

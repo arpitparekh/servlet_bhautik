@@ -15,7 +15,7 @@ public class MyParameter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	String result = "";
-//	String headerData = "";
+	String headerData = "";
 	
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,18 +53,19 @@ public class MyParameter extends HttpServlet {
 		System.out.println();
 		System.out.println();
 		
-//		Enumeration headerNames = request.getHeaderNames();
-//	    
-//	      while(headerNames.hasMoreElements()) {
-//	         String paramName = (String)headerNames.nextElement();
-//	        
-//	         String paramValue = request.getHeader(paramName);
-//	         
-////	         headerData = headerData +paramName + ":\n" + paramValue;
-//	         
-//	      }
+		Enumeration headerNames = request.getHeaderNames();
+	    
+	      while(headerNames.hasMoreElements()) {
+	         String paramName = (String)headerNames.nextElement();
+	        
+	         String paramValue = request.getHeader(paramName);
+	         
+	         headerData = headerData +paramName + ":\n" + paramValue;
+	         System.out.println(headerData);
+	         
+	      }
 		
-//		request.setAttribute("result", result);
+		request.setAttribute("result", result);
 		
 		response.sendRedirect(request.getContextPath() + "/mypara");
 		

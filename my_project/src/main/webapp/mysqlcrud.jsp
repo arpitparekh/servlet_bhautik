@@ -137,7 +137,7 @@
 <body>
     <div id="main">
         <div id="form-container">
-            <form action="mysql-crud" method="post">
+            <form action="mysql-crud" method="post" enctype = "multipart/form-data">
                 <% 
                 Majoor m = (Majoor)request.getAttribute("obj");
                 if(m==null){ 
@@ -149,6 +149,8 @@
                     <label for="salary">Salary</label>
                     <input id="salary" name="salary" type="number" placeholder="Enter salary" required>
                     
+                    <input id="image" name="image" type="file">
+                    
                     <button type="submit">Save Data</button>
                 <% } else { %>
                     <h2>Update Record</h2>
@@ -159,6 +161,12 @@
                     
                     <label for="salary">Salary</label>
                     <input id="salary" name="salary" type="number" value="<%= m.getSalary() %>" required>
+                    
+                    <% if (m != null && m.getImage_path() != null) { %>
+    				<img src="<%= m.getImage_path() %>" alt="Image Not Found" width="100" height="100">
+					<% } %>
+					<input id="image" name="image" type="file">
+					<input type="hidden" name="oldImagePath" value="<%= m.getImage_path() %>">
                     
                     <button type="submit">Update Data</button>
                 <% } %>
@@ -176,7 +184,8 @@
                         <div class="item-details">
                             <strong>ID:</strong> <%= m1.getId() %><br>
                             <strong>Name:</strong> <%= m1.getName() %><br>
-                            <strong>Salary:</strong> <%= m1.getSalary() %>
+                            <strong>Salary:</strong> <%= m1.getSalary() %><br>
+                            <strong>Image Name:</strong> <%= m1.getImage_path() %>
                         </div>
                         <div class="item-actions">
                             <form method="post" action="mysql-crud">

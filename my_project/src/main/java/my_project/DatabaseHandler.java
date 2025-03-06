@@ -1,5 +1,9 @@
 package my_project;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -38,13 +42,22 @@ public class DatabaseHandler {
 		}
 	}
 
-	void insertData(String name,float salary) {
-		String sql = "insert into majoor(name,salary) values (?,?)";
+	void insertData(String name,float salary,InputStream is,String fileName) {
+		String sql = "insert into majoor(name,salary,image,image_path) values (?,?,?,?)";
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, name);
 			ps.setFloat(2, salary);
+			ps.setBlob(3, is);
+			ps.setString(4, fileName);
 			ps.execute();
+			try {
+				is.close();
+			} catch (IOException e) {
+
+				System.out.println("DH : "+" Input Stream close nai thai");
+				
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -61,8 +74,25 @@ public class DatabaseHandler {
 		try {
 			ResultSet result = ps.executeQuery(sql);
 			
-			while(result.next()) {				
-				list.add(new Majoor(result.getInt("id"),result.getString("name"),result.getFloat("salary")));
+			while(result.next()) {
+				int id = result.getInt("id");
+				String name = result.getString("name");
+				float salary = result.getFloat("salary");
+				String image_path = result.getString("image_path");
+				Blob b = result.getBlob("image");
+				
+				InputStream is = b.getBinaryStream();
+				byte[] arr = new byte[2024];
+				try {
+					arr = new byte[is.available()];
+					is.read(arr);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.out.println("DH Blog  mathi read kairu: "+e.getMessage());
+				}
+				
+			
+				list.add(new Majoor(id,name,salary,arr,image_path));
 			}
 			
 			
@@ -76,16 +106,36 @@ public class DatabaseHandler {
 		
 	}
 	
-	Majoor getSingleData(int id) {
+	Majoor getSingleData(int parameterId) {
 		Majoor m = new Majoor();
 		String sql = "select * from majoor where id=?";
 		
 		try {
 			ps = connection.prepareStatement(sql);
-			ps.setInt(1, id);
+			ps.setInt(1, parameterId);
 			ResultSet result = ps.executeQuery();
-			while(result.next()) {				
-				m = new Majoor(result.getInt("id"),result.getString("name"),result.getFloat("salary"));
+			while(result.next()) {
+				int id = result.getInt("id");
+				String name = result.getString("name");
+				float salary = result.getFloat("salary");
+				String image_path = result.getString("image_path");
+				Blob b = result.getBlob("image");
+				
+				
+				InputStream is = b.getBinaryStream();
+				byte[] arr = new byte[2024];
+				try {
+					arr = new byte[is.available()];
+					is.read(arr);
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.out.println("DH Blog  mathi read kairu: "+e.getMessage());
+				}
+				
+				image_path = "/home/arpit-parekh/Pictures/Screenshots/" + image_path;
+				
+				m = new Majoor(id,name,salary,arr,image_path);
 			}
 			return m;
 		} catch (SQLException e) {
