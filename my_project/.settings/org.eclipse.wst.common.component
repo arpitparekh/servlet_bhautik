@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-        
-    <wb-module deploy-name="my_project">
-                
-        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-                
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-                
-        <property name="context-root" value="my_project"/>
-                
-        <property name="java-output-path" value="/my_project/build/classes"/>
             
-    </wb-module>
     
+    <wb-module deploy-name="my_project">
+                        
+        
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <dependent-module archiveName="jakarta.servlet-api-6.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/arpit-parekh/Downloads/jakarta.servlet-api-6.1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="javax.servlet-api-3.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/arpit-parekh/Downloads/javax.servlet-api-3.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jakarta.mail-2.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/arpit-parekh/Downloads/jakarta.mail-2.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jakarta.activation-api-2.1.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/arpit-parekh/Downloads/jakarta.activation-api-2.1.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+                        
+        
+        <property name="context-root" value="my_project"/>
+                        
+        
+        <property name="java-output-path" value="/my_project/build/classes"/>
+                    
+    
+    </wb-module>
+        
+
 </project-modules>
